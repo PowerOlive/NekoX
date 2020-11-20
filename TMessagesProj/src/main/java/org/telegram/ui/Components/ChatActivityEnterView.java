@@ -3027,6 +3027,10 @@ public class ChatActivityEnterView extends FrameLayout implements NotificationCe
     }
 
     private void startLockTransition(boolean animate) {
+        if (!animate) {
+            recordCircle.sendButtonVisible = true;
+        }
+
         AnimatorSet animatorSet = new AnimatorSet();
         if (!NekoConfig.disableVibration && animate) {
             performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
@@ -4297,7 +4301,7 @@ public class ChatActivityEnterView extends FrameLayout implements NotificationCe
 
         isInInput = use;
 
-        if (duration == 0 && (hasBotCommands || botReplyMarkup != null)) {
+        if (duration == 0 && checkBotButton()) {
             botButton.setVisibility(use ? View.GONE : View.VISIBLE);
         }
 
@@ -4415,7 +4419,7 @@ public class ChatActivityEnterView extends FrameLayout implements NotificationCe
 
             AnimatorSet attachIconAnimator = null;
             AnimatorSet botIconAnimator = null;
-            if (attachButton != null) {
+            if (attachButton != null && NekoConfig.useChatAttachMediaMenu) {
                 checkAttachButton(false, 150);
                 if (!attachButton.isShown()) {
                     attachButton.setAlpha(0f);
@@ -4475,12 +4479,20 @@ public class ChatActivityEnterView extends FrameLayout implements NotificationCe
 
             recordPannelAnimation = new AnimatorSet();
             if (attachIconAnimator != null) {
-                recordPannelAnimation.playTogether(
-                        exitAnimation,
-                        attachIconAnimator,
-                        botIconAnimator,
-                        iconsEndAnimator
-                );
+                if (botIconAnimator != null) {
+                    recordPannelAnimation.playTogether(
+                            exitAnimation,
+                            attachIconAnimator,
+                            botIconAnimator,
+                            iconsEndAnimator
+                    );
+                } else {
+                    recordPannelAnimation.playTogether(
+                            exitAnimation,
+                            attachIconAnimator,
+                            iconsEndAnimator
+                    );
+                }
             } else {
                 recordPannelAnimation.playTogether(
                         exitAnimation,
@@ -4710,7 +4722,7 @@ public class ChatActivityEnterView extends FrameLayout implements NotificationCe
                         runningAnimation = new AnimatorSet();
 
                         ArrayList<Animator> animators = new ArrayList<>();
-                        if (botButton.getVisibility() == VISIBLE) {
+                        if (NekoConfig.useChatAttachMediaMenu && botButton.getVisibility() == VISIBLE) {
                             animators.add(ObjectAnimator.ofFloat(botButton, View.SCALE_X, 0.1f));
                             animators.add(ObjectAnimator.ofFloat(botButton, View.SCALE_Y, 0.1f));
                             animators.add(ObjectAnimator.ofFloat(botButton, View.ALPHA, 0.0f));
@@ -4896,7 +4908,7 @@ public class ChatActivityEnterView extends FrameLayout implements NotificationCe
                     runningAnimation = new AnimatorSet();
 
                     ArrayList<Animator> animators = new ArrayList<>();
-                    if (botButton.getVisibility() == VISIBLE) {
+                    if (NekoConfig.useChatAttachMediaMenu && botButton.getVisibility() == VISIBLE) {
                         animators.add(ObjectAnimator.ofFloat(botButton, View.SCALE_X, 0.1f));
                         animators.add(ObjectAnimator.ofFloat(botButton, View.SCALE_Y, 0.1f));
                         animators.add(ObjectAnimator.ofFloat(botButton, View.ALPHA, 0.0f));
