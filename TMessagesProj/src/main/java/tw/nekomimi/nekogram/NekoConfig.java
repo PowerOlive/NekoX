@@ -146,6 +146,7 @@ public class NekoConfig {
     public static boolean avatarBackgroundDarken;
     public static boolean disableTrending;
     public static boolean dontSendGreetingSticker;
+    public static boolean dontDrawTimeForSticker;
     public static boolean takeGIFasVideo;
 
     public static boolean disableAutoDownloadingWin32Executable;
@@ -313,6 +314,7 @@ public class NekoConfig {
         acceptSecretChat = preferences.getBoolean("acceptSecretChat", true);
         disableTrending = preferences.getBoolean("disableTrending", true);
         dontSendGreetingSticker = preferences.getBoolean("dontSendGreetingSticker", false);
+        dontDrawTimeForSticker = preferences.getBoolean("dontDrawTimeForSticker", false);
         takeGIFasVideo = preferences.getBoolean("takeGIFasVideo", false);
 
         disableAutoDownloadingWin32Executable = preferences.getBoolean("disableAutoDownloadingWin32Executable", true);
@@ -803,6 +805,10 @@ public class NekoConfig {
 
     public static void toggleDontSendGreetingSticker() {
         preferences.edit().putBoolean("dontSendGreetingSticker", dontSendGreetingSticker = !dontSendGreetingSticker).apply();
+    }
+
+    public static void toggleDontDrawTimeForSticker() {
+        preferences.edit().putBoolean("dontDrawTimeForSticker", dontDrawTimeForSticker = !dontDrawTimeForSticker).apply();
     }
 
     public static void toggleTakeGIFasVideo() {

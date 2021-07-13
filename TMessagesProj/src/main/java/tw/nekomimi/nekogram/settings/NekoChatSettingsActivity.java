@@ -75,6 +75,7 @@ public class NekoChatSettingsActivity extends BaseFragment implements Notificati
     private int disableProximityEventsRow;
     private int disableTrendingRow;
     private int dontSendGreetingStickerRow;
+    private int dontDrawTimeForStickerRow;
     private int takeGIFasVideoRow;
 
     private int mapPreviewRow;
@@ -276,6 +277,11 @@ public class NekoChatSettingsActivity extends BaseFragment implements Notificati
                 if (view instanceof TextCheckCell) {
                     ((TextCheckCell) view).setChecked(NekoConfig.dontSendGreetingSticker);
                 }
+            } else if (position == dontDrawTimeForStickerRow) {
+                NekoConfig.toggleDontDrawTimeForSticker();
+                if (view instanceof TextCheckCell) {
+                    ((TextCheckCell) view).setChecked(NekoConfig.dontDrawTimeForSticker);
+                }
             } else if (position == takeGIFasVideoRow) {
                 NekoConfig.toggleTakeGIFasVideo();
                 if (view instanceof TextCheckCell) {
@@ -329,6 +335,7 @@ public class NekoChatSettingsActivity extends BaseFragment implements Notificati
         disableProximityEventsRow = rowCount++;
         disableTrendingRow = rowCount++;
         dontSendGreetingStickerRow = rowCount++;
+        dontDrawTimeForStickerRow = rowCount++;
         takeGIFasVideoRow = rowCount++;
 
         mapPreviewRow = rowCount++;
@@ -691,6 +698,8 @@ public class NekoChatSettingsActivity extends BaseFragment implements Notificati
                         textCell.setTextAndCheck(LocaleController.getString("DisableTrending", R.string.DisableTrending), NekoConfig.disableTrending, true);
                     } else if (position == dontSendGreetingStickerRow) {
                         textCell.setTextAndCheck(LocaleController.getString("DontSendGreetingSticker", R.string.DontSendGreetingSticker), NekoConfig.dontSendGreetingSticker, true);
+                    } else if (position == dontDrawTimeForStickerRow) {
+                        textCell.setTextAndCheck(LocaleController.getString("DontDrawTimeForSticker", R.string.DontDrawTimeForSticker), NekoConfig.dontDrawTimeForSticker, true);
                     } else if (position == takeGIFasVideoRow) {
                         textCell.setTextAndCheck(LocaleController.getString("TakeGIFasVideo", R.string.TakeGIFasVideo), NekoConfig.takeGIFasVideo, true);
                     } else if (position == win32Row) {

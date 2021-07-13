@@ -5996,7 +5996,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         }
         accessibilityVirtualViewBounds.clear();
     }
-    
+
     private boolean needHide;
 
     public void checkVideoPlayback(boolean allowStart) {
@@ -10390,7 +10390,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         if (!autoPlayingMedia || !MediaController.getInstance().isPlayingMessageAndReadyToDraw(currentMessageObject) && !transitionParams.animateBackgroundBoundsInner) {
             drawOverlays(canvas);
         }
-        if ((drawTime || !mediaBackground) && !forceNotDrawTime && !transitionParams.animateBackgroundBoundsInner) {
+        if ((drawTime || !mediaBackground) && !forceNotDrawTime && !transitionParams.animateBackgroundBoundsInner && (!currentMessageObject.isAnyKindOfSticker() || !NekoConfig.dontDrawTimeForSticker)) {
             drawTime(canvas, 1f, false);
         }
 
